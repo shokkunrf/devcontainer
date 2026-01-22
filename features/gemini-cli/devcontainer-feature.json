@@ -1,0 +1,16 @@
+{
+    "id": "gemini-cli",
+    "version": "1.0.0",
+    "name": "Gemini CLI",
+    "description": "Installs @google/gemini-cli tool",
+    "options": {
+        "version": {
+            "type": "string",
+            "default": "latest",
+            "description": "Version of @google/gemini-cli to install"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/node"
+    ]
+}

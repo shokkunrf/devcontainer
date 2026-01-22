@@ -5,6 +5,7 @@
             "version": "24"
         },
         "ghcr.io/shokkunrf/devcontainer-features/claude-code:1":{},
+        "ghcr.io/shokkunrf/devcontainer-features/gemini-cli:latest": {},
         "ghcr.io/shokkunrf/devcontainer-features/prettier:1":{}
     },
     "remoteUser": "vscode"
