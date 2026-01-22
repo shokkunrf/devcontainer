@@ -1,0 +1,16 @@
+{
+    "id": "claude-code",
+    "version": "1.0.0",
+    "name": "Claude Code",
+    "description": "Installs @anthropic-ai/claude-code CLI tool",
+    "options": {
+        "version": {
+            "type": "string",
+            "default": "latest",
+            "description": "Version of claude-code to install"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/node"
+    ]
+}
