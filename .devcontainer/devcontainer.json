@@ -6,7 +6,8 @@
         },
         "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
             "moby": false
-        }
+        },
+        "ghcr.io/shokkunrf/devcontainer-features/devcontainer-cli:1":{}
     },
     "remoteUser": "vscode"
 }
