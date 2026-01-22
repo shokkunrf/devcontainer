@@ -1,11 +1,8 @@
-#!/bin/sh
-set -eu
-
-# Usage: install-npm-package.sh <package-name> <version>
-# Example: install-npm-package.sh prettier latest
-
-PACKAGE_NAME="$1"
-VERSION="${2:-latest}"
+# Usage: Set PACKAGE_NAME and VERSION before sourcing this script
+# Example:
+#   PACKAGE_NAME="prettier"
+#   VERSION="${VERSION:-latest}"
+#   . "$SCRIPT_DIR/_install-npm-package.sh"
 
 echo "Activating feature '$PACKAGE_NAME' Version: $VERSION"
 
