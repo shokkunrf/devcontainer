@@ -1,10 +1,10 @@
 {
-    "image": "ghcr.io/shokkunrf/devcontainer-images/base:latest",
+    "image": "ghcr.io/shokkunrf/devcontainer-images/base:2",
     "features": {
         "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
             "moby": false
         },
         "ghcr.io/shokkunrf/devcontainer-features/devcontainer-cli:1":{}
     },
-    "remoteUser": "vscode"
+    "remoteUser": "node"
 }
