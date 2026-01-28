@@ -1,12 +1,9 @@
 {
-    "image": "mcr.microsoft.com/devcontainers/base:debian",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:24",
     "features": {
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "24"
-        },
         "ghcr.io/shokkunrf/devcontainer-features/claude-code:1":{},
-        "ghcr.io/shokkunrf/devcontainer-features/gemini-cli:latest": {},
+        "ghcr.io/shokkunrf/devcontainer-features/gemini-cli:1": {},
         "ghcr.io/shokkunrf/devcontainer-features/prettier:1":{}
     },
-    "remoteUser": "vscode"
+    "remoteUser": "node"
 }
