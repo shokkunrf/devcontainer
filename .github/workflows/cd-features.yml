@@ -29,10 +29,15 @@ jobs:
             exit 1
           fi
 
+      - name: Prepare single feature for publish
+        run: |
+          mkdir -p /tmp/publish-features
+          cp -r "features/${{ steps.meta.outputs.name }}" /tmp/publish-features/
+
       - name: Publish feature
         uses: devcontainers/action@v1
         with:
           publish-features: true
-          base-path-to-features: ./features/${{ steps.meta.outputs.name }}
+          base-path-to-features: /tmp/publish-features
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
