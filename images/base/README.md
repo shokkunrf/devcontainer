@@ -12,6 +12,6 @@ Base devcontainer image with common tools.
 
 ## Included Features
 
-- [Node.js](https://github.com/devcontainers/features/tree/main/src/node)
 - [Claude Code](../features/claude-code)
+- [Gemini Cli](../features/gemini-cli)
 - [Prettier](../features/prettier)
