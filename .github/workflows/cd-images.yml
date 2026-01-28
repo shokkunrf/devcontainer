@@ -1,12 +1,12 @@
 name: "CD: Build and Push DevContainer Image"
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'images/**'
 
 jobs:
   build:
-    if: startsWith(github.event.release.tag_name, 'images/')
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -18,7 +18,7 @@ jobs:
         id: meta
         run: |
           # images/base/v1.0.0 → name=base, version=1.0.0
-          TAG="${{ github.event.release.tag_name }}"
+          TAG="${{ github.ref_name }}"
           NAME=$(echo "$TAG" | cut -d'/' -f2)
           VERSION=$(echo "$TAG" | sed 's|.*/v||')
           echo "name=$NAME" >> "$GITHUB_OUTPUT"
