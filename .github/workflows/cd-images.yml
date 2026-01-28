@@ -21,8 +21,15 @@ jobs:
           TAG="${{ github.ref_name }}"
           NAME=$(echo "$TAG" | cut -d'/' -f2)
           VERSION=$(echo "$TAG" | sed 's|.*/v||')
+
+          # Generate version tags: v2.0.0 → 2.0.0,2.0,2
+          MAJOR=$(echo "$VERSION" | cut -d'.' -f1)
+          MINOR=$(echo "$VERSION" | cut -d'.' -f2)
+          TAGS="${VERSION},${MAJOR}.${MINOR},${MAJOR}"
+
           echo "name=$NAME" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tags=$TAGS" >> "$GITHUB_OUTPUT"
 
       - name: Validate image exists
         run: |
@@ -49,6 +56,6 @@ jobs:
         with:
           subFolder: images/${{ steps.meta.outputs.name }}
           imageName: ghcr.io/shokkunrf/devcontainer-images/${{ steps.meta.outputs.name }}
-          imageTag: ${{ steps.meta.outputs.version }},latest
+          imageTag: ${{ steps.meta.outputs.tags }},latest
           platform: linux/amd64,linux/arm64
           push: always
