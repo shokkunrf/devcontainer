@@ -1,0 +1,38 @@
+name: "CD: Publish DevContainer Feature"
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    if: startsWith(github.event.release.tag_name, 'features/')
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract feature name from tag
+        id: meta
+        run: |
+          # features/devcontainer-cli/v1.0.0 → devcontainer-cli
+          TAG="${{ github.event.release.tag_name }}"
+          NAME=$(echo "$TAG" | cut -d'/' -f2)
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Validate feature exists
+        run: |
+          if [ ! -d "features/${{ steps.meta.outputs.name }}" ]; then
+            echo "::error::Feature '${{ steps.meta.outputs.name }}' not found"
+            exit 1
+          fi
+
+      - name: Publish feature
+        uses: devcontainers/action@v1
+        with:
+          publish-features: true
+          base-path-to-features: ./features/${{ steps.meta.outputs.name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
