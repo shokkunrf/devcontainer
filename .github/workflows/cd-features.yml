@@ -45,6 +45,6 @@ jobs:
         with:
           publish-features: true
           base-path-to-features: /tmp/publish-features
-          features-namespace: devcontainer-features
+          features-namespace: ${{ github.repository_owner }}/${{ github.event.repository.name }}-features
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
