@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - 'images/**'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag name (e.g., images/base/v1.0.0)'
+        required: true
+        type: string
 
 jobs:
   build:
@@ -18,7 +24,7 @@ jobs:
         id: meta
         run: |
           # images/base/v1.0.0 → name=base, version=1.0.0
-          TAG="${{ github.ref_name }}"
+          TAG="${{ inputs.tag || github.ref_name }}"
           NAME=$(echo "$TAG" | cut -d'/' -f2)
           VERSION=$(echo "$TAG" | sed 's|.*/v||')
 

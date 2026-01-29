@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - 'features/**'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag name (e.g., features/devcontainer-cli/v1.0.0)'
+        required: true
+        type: string
 
 jobs:
   publish:
@@ -18,7 +24,7 @@ jobs:
         id: meta
         run: |
           # features/devcontainer-cli/v1.0.0 → devcontainer-cli
-          TAG="${{ github.ref_name }}"
+          TAG="${{ inputs.tag || github.ref_name }}"
           NAME=$(echo "$TAG" | cut -d'/' -f2)
           echo "name=$NAME" >> "$GITHUB_OUTPUT"
 
