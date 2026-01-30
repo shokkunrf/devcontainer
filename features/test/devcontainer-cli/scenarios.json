@@ -1,0 +1,38 @@
+{
+  "official-debian": {
+    "image": "debian:trixie",
+    "features": {
+      "ghcr.io/devcontainers/features/node:1": {},
+      "devcontainer-cli": {}
+    }
+  },
+  "official-node-debian": {
+    "image": "node:24",
+    "features": {
+      "devcontainer-cli": {}
+    },
+    "remoteUser": "node"
+  },
+  "official-node-alpine": {
+    "image": "node:24-alpine",
+    "features": {
+      "devcontainer-cli": {}
+    },
+    "remoteUser": "node"
+  },
+  "devcontainer-base-debian": {
+    "image": "mcr.microsoft.com/devcontainers/base:debian",
+    "features": {
+      "ghcr.io/devcontainers/features/node:1": {},
+      "devcontainer-cli": {}
+    },
+    "remoteUser": "vscode"
+  },
+  "devcontainer-node": {
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:24",
+    "features": {
+      "devcontainer-cli": {}
+    },
+    "remoteUser": "node"
+  }
+}
