@@ -30,7 +30,7 @@ jobs:
 
       - name: Validate feature exists
         run: |
-          if [ ! -d "features/${{ steps.meta.outputs.name }}" ]; then
+          if [ ! -d "features/src/${{ steps.meta.outputs.name }}" ]; then
             echo "::error::Feature '${{ steps.meta.outputs.name }}' not found"
             exit 1
           fi
@@ -38,7 +38,7 @@ jobs:
       - name: Prepare single feature for publish
         run: |
           mkdir -p /tmp/publish-features
-          cp -r "features/${{ steps.meta.outputs.name }}" /tmp/publish-features/
+          cp -r "features/src/${{ steps.meta.outputs.name }}" /tmp/publish-features/
 
       - name: Publish feature
         uses: devcontainers/action@v1
