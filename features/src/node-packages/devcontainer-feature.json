@@ -1,0 +1,16 @@
+{
+    "id": "node-packages",
+    "version": "1.0.0",
+    "name": "Node Packages",
+    "description": "Installs specified npm packages globally",
+    "options": {
+        "packages": {
+            "type": "string",
+            "default": "",
+            "description": "Comma-separated list of npm packages to install (e.g., '@devcontainers/cli,prettier')"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/node"
+    ]
+}
