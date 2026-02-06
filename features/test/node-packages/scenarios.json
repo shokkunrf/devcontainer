@@ -36,6 +36,25 @@
     },
     "remoteUser": "vscode"
   },
+  "devcontainer-base-ubuntu-root": {
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+      "ghcr.io/devcontainers/features/node:1": {},
+      "node-packages": {
+        "packages": "@devcontainers/cli,prettier"
+      }
+    }
+  },
+  "devcontainer-base-ubuntu-remote-user": {
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+      "ghcr.io/devcontainers/features/node:1": {},
+      "node-packages": {
+        "packages": "@devcontainers/cli,prettier"
+      }
+    },
+    "remoteUser": "vscode"
+  },
   "devcontainer-node": {
     "image": "mcr.microsoft.com/devcontainers/javascript-node:24",
     "features": {
