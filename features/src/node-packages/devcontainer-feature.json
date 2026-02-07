@@ -2,6 +2,7 @@
     "id": "node-packages",
     "version": "1.0.0",
     "name": "Node Packages",
+    "documentationURL": "https://github.com/shokkunrf/develop/tree/main/features/src/node-packages",
     "description": "Installs specified npm packages globally",
     "options": {
         "packages": {
