@@ -6,7 +6,7 @@ Base devcontainer image with common tools.
 
 ```json
 {
-    "image": "ghcr.io/shokkunrf/devcontainer-images/base:latest"
+  "image": "ghcr.io/shokkunrf/devcontainer-images/base:latest"
 }
 ```
 

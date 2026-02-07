@@ -1,10 +1,10 @@
 {
-    "image": "ghcr.io/shokkunrf/devcontainer-images/base:2",
-    "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {
-            "moby": false
-        },
-        "ghcr.io/shokkunrf/devcontainer-features/devcontainer-cli:1": {}
+  "image": "ghcr.io/shokkunrf/devcontainer-images/base:2",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": false
     },
-    "remoteUser": "node"
+    "ghcr.io/shokkunrf/devcontainer-features/devcontainer-cli:1": {}
+  },
+  "remoteUser": "node"
 }

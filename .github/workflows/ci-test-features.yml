@@ -5,10 +5,10 @@ on:
     branches:
       - develop
     paths:
-      - 'features/**'
+      - "features/**"
   pull_request:
     paths:
-      - 'features/**'
+      - "features/**"
   workflow_dispatch:
 
 jobs:
