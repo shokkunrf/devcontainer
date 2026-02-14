@@ -1,0 +1,58 @@
+name: CI - Test Images
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - "images/**"
+  pull_request:
+    paths:
+      - "images/**"
+  workflow_dispatch:
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      images: ${{ steps.set-matrix.outputs.images }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed images
+        id: set-matrix
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            images=$(ls -d images/*/ | xargs -n1 basename | jq -R -s -c 'split("\n")[:-1]')
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            base="${{ github.event.pull_request.base.sha }}"
+            images=$(git diff --name-only "$base" HEAD -- images/ | cut -d/ -f2 | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          else
+            images=$(git diff --name-only "${{ github.event.before }}" HEAD -- images/ | cut -d/ -f2 | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          fi
+          echo "images=$images" >> $GITHUB_OUTPUT
+
+  test:
+    needs: detect
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ${{ fromJson(needs.detect.outputs.images) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install devcontainer CLI
+        run: npm install -g @devcontainers/cli
+
+      - name: Build image
+        run: devcontainer up --workspace-folder images/${{ matrix.image }}
+
+      - name: Run tests
+        run: |
+          devcontainer exec --workspace-folder images/${{ matrix.image }} \
+            /bin/sh -c 'if [ -f test-project/test.sh ]; then cd test-project && chmod +x test.sh && ./test.sh; else echo "No test-project/test.sh found, skipping."; fi'

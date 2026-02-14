@@ -10,8 +10,20 @@ Base devcontainer image with common tools.
 }
 ```
 
-## Included Features
+## Included Tools
 
-- [Claude Code](../features/claude-code)
-- [Gemini Cli](../features/gemini-cli)
-- [Prettier](../features/prettier)
+| Tool | Source |
+| --- | --- |
+| common-utils (`developer` user, UID/GID 1000) | [devcontainers/features/common-utils](https://github.com/devcontainers/features/tree/main/src/common-utils) |
+| git | [devcontainers/features/git](https://github.com/devcontainers/features/tree/main/src/git) |
+| Node.js 24 + npm | [devcontainers/features/node](https://github.com/devcontainers/features/tree/main/src/node) |
+| prettier | [prettier](https://www.npmjs.com/package/prettier) |
+| Claude Code | [@anthropic-ai/claude-code](https://www.npmjs.com/package/@anthropic-ai/claude-code) |
+| Gemini CLI | [@google/gemini-cli](https://www.npmjs.com/package/@google/gemini-cli) |
+
+## Testing
+
+```bash
+devcontainer up --workspace-folder images/base
+devcontainer exec --workspace-folder images/base /bin/sh -c 'cd test-project && chmod +x test.sh && ./test.sh'
+```
