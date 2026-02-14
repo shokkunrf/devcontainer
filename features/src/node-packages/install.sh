@@ -46,7 +46,7 @@ EOF
 
     # User has write permission (e.g., devcontainer images with nvm)
     if su "$_REMOTE_USER" -c "test -w '$npm_prefix/lib/node_modules'" 2>/dev/null; then
-        su - "$_REMOTE_USER" -c "PATH='$npm_bin_dir:\$PATH' npm install -g $packages"
+        su - "$_REMOTE_USER" -c "PATH=$npm_bin_dir:\$PATH npm install -g $packages"
         return 0
     fi
 
@@ -61,7 +61,7 @@ export NPM_CONFIG_PREFIX="$npm_global"
 export PATH="$npm_global/bin:\$PATH"
 EOF
 
-    su - "$_REMOTE_USER" -c "PATH='$npm_bin_dir:\$PATH' NPM_CONFIG_PREFIX='$npm_global' npm install -g $packages"
+    su - "$_REMOTE_USER" -c "PATH=$npm_bin_dir:\$PATH NPM_CONFIG_PREFIX=$npm_global npm install -g $packages"
     export PATH="$npm_global/bin:$PATH"
 }
 

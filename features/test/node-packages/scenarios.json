@@ -4,7 +4,7 @@
     "features": {
       "ghcr.io/devcontainers/features/node:1": {},
       "node-packages": {
-        "packages": "@devcontainers/cli,prettier"
+        "packages": "@devcontainers/cli,prettier,@google/gemini-cli"
       }
     }
   },
@@ -12,7 +12,7 @@
     "image": "node:24",
     "features": {
       "node-packages": {
-        "packages": "@devcontainers/cli,prettier"
+        "packages": "@devcontainers/cli,prettier,@google/gemini-cli"
       }
     },
     "remoteUser": "node"
@@ -21,7 +21,7 @@
     "image": "node:24-alpine",
     "features": {
       "node-packages": {
-        "packages": "@devcontainers/cli,prettier"
+        "packages": "@devcontainers/cli,prettier,@google/gemini-cli"
       }
     },
     "remoteUser": "node"
@@ -31,7 +31,7 @@
     "features": {
       "ghcr.io/devcontainers/features/node:1": {},
       "node-packages": {
-        "packages": "@devcontainers/cli,prettier"
+        "packages": "@devcontainers/cli,prettier,@google/gemini-cli"
       }
     },
     "remoteUser": "vscode"
@@ -41,7 +41,7 @@
     "features": {
       "ghcr.io/devcontainers/features/node:1": {},
       "node-packages": {
-        "packages": "@devcontainers/cli,prettier"
+        "packages": "@devcontainers/cli,prettier,@google/gemini-cli"
       }
     }
   },
@@ -50,7 +50,7 @@
     "features": {
       "ghcr.io/devcontainers/features/node:1": {},
       "node-packages": {
-        "packages": "@devcontainers/cli,prettier"
+        "packages": "@devcontainers/cli,prettier,@google/gemini-cli"
       }
     },
     "remoteUser": "vscode"
@@ -59,7 +59,7 @@
     "image": "mcr.microsoft.com/devcontainers/javascript-node:24",
     "features": {
       "node-packages": {
-        "packages": "@devcontainers/cli,prettier"
+        "packages": "@devcontainers/cli,prettier,@google/gemini-cli"
       }
     },
     "remoteUser": "node"
