@@ -3,10 +3,8 @@ cd "$(dirname "$0")"
 
 . ./test-utils.sh developer
 
-# User checks
-check "non-root-user" id ${USERNAME}
-check "uid" test "$(id -u ${USERNAME})" = "1000"
-check "gid" test "$(id -g ${USERNAME})" = "1000"
+# User check
+check "remote-user" test "$(whoami)" = "${USERNAME}"
 
 # Tool checks
 check "git" git --version

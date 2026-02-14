@@ -14,7 +14,7 @@ Base devcontainer image with common tools.
 
 | Tool | Source |
 | --- | --- |
-| common-utils (`developer` user, UID/GID 1000) | [devcontainers/features/common-utils](https://github.com/devcontainers/features/tree/main/src/common-utils) |
+| common-utils (`developer` user) | [devcontainers/features/common-utils](https://github.com/devcontainers/features/tree/main/src/common-utils) |
 | git | [devcontainers/features/git](https://github.com/devcontainers/features/tree/main/src/git) |
 | Node.js 24 + npm | [devcontainers/features/node](https://github.com/devcontainers/features/tree/main/src/node) |
 | prettier | [prettier](https://www.npmjs.com/package/prettier) |
