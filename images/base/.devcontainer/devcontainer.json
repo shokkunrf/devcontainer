@@ -1,9 +1,35 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:24",
-  "features": {
-    "ghcr.io/shokkunrf/devcontainer-features/claude-code:1": {},
-    "ghcr.io/shokkunrf/devcontainer-features/gemini-cli:1": {},
-    "ghcr.io/shokkunrf/devcontainer-features/prettier:1": {}
+  "build": {
+    "context": ".",
+    "dockerfile": "./Dockerfile"
   },
-  "remoteUser": "node"
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "false",
+      "username": "developer",
+      "userUid": "1000",
+      "userGid": "1000",
+      "upgradePackages": "true"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest",
+      "ppa": "false"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "24"
+    },
+    "ghcr.io/shokkunrf/devcontainer-features/node-packages:1": {
+      "packages": "prettier,@anthropic-ai/claude-code,@google/gemini-cli"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["esbenp.prettier-vscode"],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      }
+    }
+  },
+  "remoteUser": "developer"
 }
