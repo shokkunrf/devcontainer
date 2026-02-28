@@ -1,0 +1,9 @@
+{
+  "id": "claude-code",
+  "version": "1.0.0",
+  "name": "Claude Code",
+  "documentationURL": "https://github.com/shokkunrf/develop/tree/main/features/src/claude-code",
+  "description": "Installs Claude Code CLI via the official installer",
+  "options": {},
+  "installsAfter": ["ghcr.io/devcontainers/features/common-utils"]
+}
