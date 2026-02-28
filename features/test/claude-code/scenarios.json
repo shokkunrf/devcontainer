@@ -1,0 +1,29 @@
+{
+  "official-debian": {
+    "image": "debian:trixie",
+    "features": {
+      "ghcr.io/devcontainers/features/common-utils:2": {},
+      "claude-code": {}
+    }
+  },
+  "devcontainer-base-debian": {
+    "image": "mcr.microsoft.com/devcontainers/base:debian",
+    "features": {
+      "claude-code": {}
+    },
+    "remoteUser": "vscode"
+  },
+  "devcontainer-base-ubuntu-root": {
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+      "claude-code": {}
+    }
+  },
+  "devcontainer-base-ubuntu-remote-user": {
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+      "claude-code": {}
+    },
+    "remoteUser": "vscode"
+  }
+}

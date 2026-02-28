@@ -9,7 +9,7 @@ Installs npm packages globally.
   "features": {
     "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/shokkunrf/devcontainer-features/node-packages:1": {
-      "packages": "@devcontainers/cli,prettier@3.8.1,@anthropic-ai/claude-code"
+      "packages": "@devcontainers/cli,prettier@3.8.1"
     }
   }
 }
@@ -24,7 +24,7 @@ Installs npm packages globally.
 ## Examples
 
 ```json
-"packages": "@devcontainers/cli,prettier@3.8.1,@anthropic-ai/claude-code"
+"packages": "@devcontainers/cli,prettier@3.8.1"
 ```
 
 ## Requirements

@@ -1,0 +1,29 @@
+#!/bin/sh
+# References:
+#   - https://docs.anthropic.com/en/docs/claude-code/overview
+
+set -eu
+
+echo "Activating feature 'claude-code'"
+
+_install_claude_code() {
+    if command -v curl >/dev/null; then
+        download_cmd="curl -fsSL https://claude.ai/install.sh"
+    elif command -v wget >/dev/null; then
+        download_cmd="wget -qO- https://claude.ai/install.sh"
+    else
+        echo "ERROR: curl or wget is required but neither was found!"
+        return 1
+    fi
+
+    # Install as remote user if running as root with non-root remote user
+    if [ "$(id -u)" = "0" ] && [ -n "${_REMOTE_USER:-}" ] && [ "$_REMOTE_USER" != "root" ]; then
+        su - "$_REMOTE_USER" -c "$download_cmd | bash"
+    else
+        $download_cmd | bash
+    fi
+}
+
+_install_claude_code
+
+echo "Claude Code installed successfully!"
