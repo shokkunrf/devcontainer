@@ -16,8 +16,9 @@
     "ghcr.io/devcontainers/features/node:1": {
       "version": "24"
     },
+    "ghcr.io/shokkunrf/devcontainer-features/claude-code:1": {},
     "ghcr.io/shokkunrf/devcontainer-features/node-packages:1": {
-      "packages": "prettier,@anthropic-ai/claude-code,@google/gemini-cli"
+      "packages": "prettier,@google/gemini-cli"
     },
     "ghcr.io/shokkunrf/devcontainer-features/wd:1": {}
   },
