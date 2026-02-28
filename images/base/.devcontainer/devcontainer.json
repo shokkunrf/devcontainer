@@ -18,7 +18,8 @@
     },
     "ghcr.io/shokkunrf/devcontainer-features/node-packages:1": {
       "packages": "prettier,@anthropic-ai/claude-code,@google/gemini-cli"
-    }
+    },
+    "ghcr.io/shokkunrf/devcontainer-features/wd:1": {}
   },
   "customizations": {
     "vscode": {

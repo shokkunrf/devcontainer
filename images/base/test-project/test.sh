@@ -17,6 +17,7 @@ check "npm" npm --version
 check "prettier" prettier --version
 check "claude" claude --version
 check "gemini" gemini --version
+check "wd" wd --version
 
 # Config checks
 check "prettierrc" test -f /workspaces/.prettierrc
