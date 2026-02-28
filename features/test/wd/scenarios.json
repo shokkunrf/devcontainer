@@ -1,0 +1,25 @@
+{
+  "official-debian": {
+    "image": "debian:trixie",
+    "features": {
+      "ghcr.io/devcontainers/features/common-utils": {},
+      "wd": {}
+    }
+  },
+  "devcontainer-base-debian": {
+    "image": "mcr.microsoft.com/devcontainers/base:debian",
+    "features": {
+      "wd": {
+        "version": "v1.1.1"
+      }
+    },
+    "remoteUser": "vscode"
+  },
+  "devcontainer-base-alpine": {
+    "image": "mcr.microsoft.com/devcontainers/base:alpine",
+    "features": {
+      "wd": {}
+    },
+    "remoteUser": "vscode"
+  }
+}

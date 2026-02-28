@@ -1,0 +1,15 @@
+{
+  "id": "wd",
+  "version": "1.0.0",
+  "name": "wd",
+  "documentationURL": "https://github.com/shokkunrf/devcontainer/blob/develop/features/src/wd/README.md",
+  "description": "Installs wd, a git worktree management tool",
+  "options": {
+    "version": {
+      "type": "string",
+      "default": "latest",
+      "description": "Version of wd to install (e.g., 'v1.1.1'). Use 'latest' for the most recent release."
+    }
+  },
+  "installsAfter": ["ghcr.io/devcontainers/features/common-utils"]
+}
