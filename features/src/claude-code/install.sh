@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # References:
 #   - https://docs.anthropic.com/en/docs/claude-code/overview
 
