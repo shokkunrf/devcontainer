@@ -19,11 +19,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Detect features
+      - name: Detect changed features
         id: set-matrix
         run: |
-          features=$(ls -d features/src/*/ | xargs -n1 basename | jq -R -s -c 'split("\n")[:-1]')
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            features=$(ls -d features/src/*/ | xargs -n1 basename | jq -R -s -c 'split("\n")[:-1]')
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            base="${{ github.event.pull_request.base.sha }}"
+            features=$(git diff --name-only "$base" HEAD -- features/src/ | cut -d/ -f3 | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          else
+            features=$(git diff --name-only "${{ github.event.before }}" HEAD -- features/src/ | cut -d/ -f3 | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          fi
           echo "features=$features" >> $GITHUB_OUTPUT
 
   test:
