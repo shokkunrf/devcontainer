@@ -6,6 +6,8 @@ set -e
 source dev-container-features-test-lib
 
 # Definition specific tests
+check "no .claude directory" bash -c "[ ! -d ~/.claude ]"
+check "no .claude.json file" bash -c "[ ! -f ~/.claude.json ]"
 check "claude is installed" claude --version
 check "claude is upgradable" claude upgrade
 
