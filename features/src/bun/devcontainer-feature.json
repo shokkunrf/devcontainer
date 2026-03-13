@@ -1,0 +1,9 @@
+{
+  "id": "bun",
+  "version": "1.0.0",
+  "name": "Bun",
+  "documentationURL": "https://github.com/shokkunrf/devcontainer/tree/develop/features/src/bun/README.md",
+  "description": "Installs Bun JavaScript runtime via the official installer",
+  "options": {},
+  "installsAfter": ["ghcr.io/devcontainers/features/common-utils"]
+}
