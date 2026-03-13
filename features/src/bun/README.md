@@ -1,4 +1,4 @@
-# Bun (bun)
+# bun
 
 Installs [Bun](https://bun.com/) JavaScript runtime via the official installer.
 
