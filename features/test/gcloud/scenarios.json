@@ -1,0 +1,29 @@
+{
+  "official-debian": {
+    "image": "debian:trixie",
+    "features": {
+      "ghcr.io/devcontainers/features/common-utils:2": {},
+      "gcloud": {}
+    }
+  },
+  "devcontainer-base-debian": {
+    "image": "mcr.microsoft.com/devcontainers/base:debian",
+    "features": {
+      "gcloud": {}
+    },
+    "remoteUser": "vscode"
+  },
+  "devcontainer-base-ubuntu-root": {
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+      "gcloud": {}
+    }
+  },
+  "devcontainer-base-ubuntu-remote-user": {
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+      "gcloud": {}
+    },
+    "remoteUser": "vscode"
+  }
+}
