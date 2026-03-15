@@ -1,0 +1,12 @@
+{
+  "id": "gcloud",
+  "version": "1.0.0",
+  "name": "Google Cloud CLI",
+  "documentationURL": "https://github.com/shokkunrf/devcontainer/tree/develop/features/src/gcloud/README.md",
+  "description": "Installs Google Cloud CLI via the official tarball",
+  "options": {},
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/devcontainers/features/python"
+  ]
+}
