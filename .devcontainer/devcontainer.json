@@ -8,5 +8,11 @@
       "packages": "@devcontainers/cli"
     }
   },
+  "mounts": [
+    "source=${localEnv:HOME}/.claude,target=/home/developer/.claude,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude.json,target=/home/developer/.claude.json,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.gemini,target=/home/developer/.gemini,type=bind,consistency=cached"
+  ],
+  "initializeCommand": "${localWorkspaceFolder}/.devcontainer/initializeCommand.sh",
   "remoteUser": "developer"
 }
