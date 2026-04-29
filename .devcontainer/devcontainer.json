@@ -4,7 +4,9 @@
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
       "moby": false
     },
-    "ghcr.io/shokkunrf/devcontainer-features/devcontainer-cli:1": {}
+    "ghcr.io/shokkunrf/devcontainer-features/node-packages:1": {
+      "packages": "@devcontainers/cli"
+    }
   },
   "remoteUser": "developer"
 }
