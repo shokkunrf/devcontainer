@@ -1,4 +1,4 @@
-name: CI - Test Images
+name: "CI: Test DevContainer Images"
 
 on:
   push:
@@ -43,16 +43,15 @@ jobs:
       matrix:
         image: ${{ fromJson(needs.detect.outputs.images) }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Install devcontainer CLI
         run: npm install -g @devcontainers/cli
 
       - name: Build image
-        run: devcontainer up --workspace-folder images/${{ matrix.image }}
+        run: devcontainer up --workspace-folder "images/${{ matrix.image }}"
 
       - name: Run tests
         run: |
-          devcontainer exec --workspace-folder images/${{ matrix.image }} \
+          devcontainer exec --workspace-folder "images/${{ matrix.image }}" \
             /bin/sh -c 'if [ -f test-project/test.sh ]; then cd test-project && chmod +x test.sh && ./test.sh; else echo "No test-project/test.sh found, skipping."; fi'

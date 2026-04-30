@@ -1,0 +1,167 @@
+name: "CD: Release DevContainer Image"
+
+on:
+  release:
+    types: [prereleased, released]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g., images/base/v3.1.3)"
+        required: true
+        type: string
+
+concurrency:
+  group: cd-images-${{ github.event.release.tag_name || inputs.tag }}
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    outputs:
+      image_name: ${{ steps.meta.outputs.image_name }}
+      tag: ${{ steps.meta.outputs.tag }}
+      image_ref: ${{ steps.meta.outputs.image_ref }}
+      sha_tag: ${{ steps.meta.outputs.sha_tag }}
+      version: ${{ steps.meta.outputs.version }}
+      major: ${{ steps.meta.outputs.major }}
+      minor: ${{ steps.meta.outputs.minor }}
+      is_full_release: ${{ steps.meta.outputs.is_full_release }}
+      image_exists: ${{ steps.check.outputs.exists }}
+    permissions:
+      packages: read
+    steps:
+      - name: Extract metadata
+        id: meta
+        env:
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          REPO_OWNER=$(echo "$REPOSITORY" | cut -d'/' -f1)
+          REPO_NAME=$(echo "$REPOSITORY" | cut -d'/' -f2)
+
+          # Validate tag format: images/{name}/v{version}
+          if ! echo "$TAG" | grep -qE '^images/[^/]+/v[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::notice::Tag '${TAG}' does not match image format, skipping."
+            exit 1
+          fi
+
+          IMAGE_NAME=$(echo "$TAG" | cut -d'/' -f2)
+          VERSION=$(echo "$TAG" | sed 's|.*/v||')
+          IMAGE_REF="ghcr.io/${REPO_OWNER}/${REPO_NAME}-images/${IMAGE_NAME}"
+
+          MAJOR=$(echo "$VERSION" | cut -d. -f1)
+          MINOR=$(echo "$VERSION" | cut -d. -f2)
+
+          # Resolve commit SHA from tag via API
+          RESULT=$(gh api "repos/${REPOSITORY}/git/ref/tags/${TAG}" --jq '[.object.sha, .object.type] | @tsv')
+          FULL_SHA=$(echo "$RESULT" | cut -f1)
+          TYPE=$(echo "$RESULT" | cut -f2)
+          if [ "$TYPE" = "tag" ]; then
+            FULL_SHA=$(gh api "repos/${REPOSITORY}/git/tags/${FULL_SHA}" --jq '.object.sha')
+          fi
+          SHA_TAG="sha-$(echo "$FULL_SHA" | head -c 7)"
+
+          # Determine if this is a full release (not prerelease)
+          # workflow_dispatch and released events are always full releases
+          if [ "${{ github.event.release.prerelease }}" = "true" ]; then
+            IS_FULL_RELEASE="false"
+          else
+            IS_FULL_RELEASE="true"
+          fi
+
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "image_name=$IMAGE_NAME" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "image_ref=$IMAGE_REF" >> "$GITHUB_OUTPUT"
+          echo "major=$MAJOR" >> "$GITHUB_OUTPUT"
+          echo "minor=${MAJOR}.${MINOR}" >> "$GITHUB_OUTPUT"
+          echo "sha_tag=$SHA_TAG" >> "$GITHUB_OUTPUT"
+          echo "is_full_release=$IS_FULL_RELEASE" >> "$GITHUB_OUTPUT"
+
+      - name: Check version is not older than latest
+        if: steps.meta.outputs.is_full_release == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          IMAGE_NAME="${{ steps.meta.outputs.image_name }}"
+          LATEST_FOR_IMAGE=$(gh release list --repo "$REPOSITORY" --limit 100 --json tagName,isPrerelease \
+            --jq "[.[] | select(.isPrerelease == false) | select(.tagName | startswith(\"images/${IMAGE_NAME}/v\")) | .tagName] | first // empty" 2>/dev/null \
+            | sed 's|.*/v||' || echo "")
+          if [ -n "$LATEST_FOR_IMAGE" ]; then
+            SORTED_FIRST=$(printf '%s\n%s\n' "$LATEST_FOR_IMAGE" "$VERSION" | sort -V | head -1)
+            if [ "$SORTED_FIRST" = "$VERSION" ] && [ "$VERSION" != "$LATEST_FOR_IMAGE" ]; then
+              echo "::error::Version ${VERSION} is older than current latest ${LATEST_FOR_IMAGE}. This would regress the :latest tag."
+              exit 1
+            fi
+          fi
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if image already exists
+        id: check
+        env:
+          IMAGE_REF: ${{ steps.meta.outputs.image_ref }}
+          SHA_TAG: ${{ steps.meta.outputs.sha_tag }}
+        run: |
+          if docker buildx imagetools inspect "${IMAGE_REF}:${SHA_TAG}" > /dev/null 2>&1; then
+            echo "Image ${IMAGE_REF}:${SHA_TAG} found, skipping build."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Image ${IMAGE_REF}:${SHA_TAG} not found, build required."
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  build:
+    if: needs.metadata.outputs.image_exists == 'false'
+    needs: metadata
+    uses: ./.github/workflows/_images-build.yml
+    with:
+      image_name: ${{ needs.metadata.outputs.image_name }}
+      ref: ${{ needs.metadata.outputs.tag }}
+      image_ref: ${{ needs.metadata.outputs.image_ref }}
+      sha_tag: ${{ needs.metadata.outputs.sha_tag }}
+    permissions:
+      packages: write
+      contents: read
+
+  promote:
+    if: ${{ !cancelled() && needs.metadata.result == 'success' && needs.metadata.outputs.is_full_release == 'true' && (needs.build.result == 'success' || needs.build.result == 'skipped') }}
+    needs: [metadata, build]
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add release tags to image
+        env:
+          IMAGE_REF: ${{ needs.metadata.outputs.image_ref }}
+          SHA_TAG: ${{ needs.metadata.outputs.sha_tag }}
+          VERSION: ${{ needs.metadata.outputs.version }}
+          MINOR: ${{ needs.metadata.outputs.minor }}
+          MAJOR: ${{ needs.metadata.outputs.major }}
+        run: |
+          docker buildx imagetools create \
+            -t "${IMAGE_REF}:${VERSION}" \
+            -t "${IMAGE_REF}:${MINOR}" \
+            -t "${IMAGE_REF}:${MAJOR}" \
+            -t "${IMAGE_REF}:latest" \
+            "${IMAGE_REF}:${SHA_TAG}"
