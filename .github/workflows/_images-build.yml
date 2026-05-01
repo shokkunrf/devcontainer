@@ -51,7 +51,7 @@ jobs:
         run: npm install -g @devcontainers/cli
 
       - name: Build and test
-        if: matrix.suffix == 'amd64'
+        if: matrix.platform == 'linux/amd64'
         run: |
           devcontainer up --workspace-folder "images/${{ inputs.image_name }}"
           devcontainer exec --workspace-folder "images/${{ inputs.image_name }}" \

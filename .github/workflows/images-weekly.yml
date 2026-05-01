@@ -87,11 +87,13 @@ jobs:
           SHA_TAG="sha-$(echo "$RELEASE_TARGET" | head -c 7)"
           IMAGE_REF="ghcr.io/${REPO_OWNER}/${REPO_NAME}-images/${IMAGE_NAME}"
 
+          git tag -f "$TAG" "$RELEASE_TARGET"
+          git push origin "refs/tags/$TAG" -f
+
           gh release create "$TAG" \
             --prerelease \
-            --target "$RELEASE_TARGET" \
             --title "$TAG" \
-            --notes "Weekly prerelease for ${IMAGE_NAME}"
+            --notes "Prerelease for ${IMAGE_NAME}"
 
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "image_name=$IMAGE_NAME" >> "$GITHUB_OUTPUT"

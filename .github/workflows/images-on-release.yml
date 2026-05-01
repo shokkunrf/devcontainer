@@ -84,8 +84,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: ${{ github.repository }}
           VERSION: ${{ steps.meta.outputs.version }}
+          IMAGE_NAME: ${{ steps.meta.outputs.image_name }}
         run: |
-          IMAGE_NAME="${{ steps.meta.outputs.image_name }}"
           LATEST_FOR_IMAGE=$(gh release list --repo "$REPOSITORY" --limit 100 --json tagName,isPrerelease \
             --jq "[.[] | select(.isPrerelease == false) | select(.tagName | startswith(\"images/${IMAGE_NAME}/v\")) | .tagName] | first // empty" 2>/dev/null \
             | sed 's|.*/v||' || echo "")
