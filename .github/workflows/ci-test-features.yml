@@ -1,4 +1,4 @@
-name: CI - Test Features
+name: "CI: Test DevContainer Features"
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
       features: ${{ steps.set-matrix.outputs.features }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -44,7 +44,7 @@ jobs:
         feature: ${{ fromJson(needs.detect.outputs.features) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install devcontainer CLI
         run: npm install -g @devcontainers/cli
