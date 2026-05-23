@@ -13,8 +13,8 @@ Installs [Google Cloud CLI](https://cloud.google.com/sdk/gcloud) via the officia
 ## Requirements
 
 - `curl` and `tar` must be available in the container
-- Linux (x86_64 or aarch64)
-- aarch64: Python 3.9-3.14 must be installed (x86_64 bundles Python)
+- Linux x86_64 or aarch64 (glibc-based; Alpine/musl is not supported)
+- A Python 3 with the `sqlite3` stdlib module. If missing, the feature installs `python3` via `apt-get` (tested on Debian and Ubuntu). If a `python` feature is also added, its Python is reused.
 
 ## Using host credentials
 
