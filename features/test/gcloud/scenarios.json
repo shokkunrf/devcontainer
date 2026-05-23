@@ -13,6 +13,14 @@
     },
     "remoteUser": "vscode"
   },
+  "devcontainer-base-debian-with-python": {
+    "image": "mcr.microsoft.com/devcontainers/base:debian",
+    "features": {
+      "ghcr.io/devcontainers/features/python:1": {},
+      "gcloud": {}
+    },
+    "remoteUser": "vscode"
+  },
   "devcontainer-base-ubuntu-root": {
     "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
     "features": {
@@ -25,5 +33,12 @@
       "gcloud": {}
     },
     "remoteUser": "vscode"
+  },
+  "shokkunrf-base": {
+    "image": "ghcr.io/shokkunrf/devcontainer-images/base:latest",
+    "features": {
+      "gcloud": {}
+    },
+    "remoteUser": "developer"
   }
 }

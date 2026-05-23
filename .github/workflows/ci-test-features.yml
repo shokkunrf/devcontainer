@@ -29,19 +29,25 @@ jobs:
             features=$(ls -d features/src/*/ | xargs -n1 basename | jq -R -s -c 'split("\n")[:-1]')
           elif [ "${{ github.event_name }}" = "pull_request" ]; then
             base="${{ github.event.pull_request.base.sha }}"
-            features=$(git diff --name-only "$base" HEAD -- features/src/ | cut -d/ -f3 | sort -u | jq -R -s -c 'split("\n")[:-1]')
+            features=$(git diff --name-only "$base" HEAD -- features/src/ features/test/ | cut -d/ -f3 | sort -u | jq -R -s -c 'split("\n")[:-1]')
           else
-            features=$(git diff --name-only "${{ github.event.before }}" HEAD -- features/src/ | cut -d/ -f3 | sort -u | jq -R -s -c 'split("\n")[:-1]')
+            features=$(git diff --name-only "${{ github.event.before }}" HEAD -- features/src/ features/test/ | cut -d/ -f3 | sort -u | jq -R -s -c 'split("\n")[:-1]')
           fi
           echo "features=$features" >> $GITHUB_OUTPUT
 
   test:
     needs: detect
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
       matrix:
         feature: ${{ fromJson(needs.detect.outputs.features) }}
+        arch: [amd64, arm64]
+        include:
+          - arch: amd64
+            runner: ubuntu-latest
+          - arch: arm64
+            runner: ubuntu-24.04-arm
     steps:
       - name: Checkout
         uses: actions/checkout@v6

@@ -25,5 +25,12 @@
       "bun": {}
     },
     "remoteUser": "vscode"
+  },
+  "shokkunrf-base": {
+    "image": "ghcr.io/shokkunrf/devcontainer-images/base:latest",
+    "features": {
+      "bun": {}
+    },
+    "remoteUser": "developer"
   }
 }

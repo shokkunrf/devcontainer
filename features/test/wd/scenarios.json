@@ -21,5 +21,12 @@
       "wd": {}
     },
     "remoteUser": "vscode"
+  },
+  "shokkunrf-base": {
+    "image": "ghcr.io/shokkunrf/devcontainer-images/base:latest",
+    "features": {
+      "wd": {}
+    },
+    "remoteUser": "developer"
   }
 }

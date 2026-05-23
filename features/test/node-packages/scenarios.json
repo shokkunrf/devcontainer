@@ -63,5 +63,14 @@
       }
     },
     "remoteUser": "node"
+  },
+  "shokkunrf-base": {
+    "image": "ghcr.io/shokkunrf/devcontainer-images/base:latest",
+    "features": {
+      "node-packages": {
+        "packages": "@devcontainers/cli,prettier,@google/gemini-cli"
+      }
+    },
+    "remoteUser": "developer"
   }
 }
