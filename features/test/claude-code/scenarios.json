@@ -25,5 +25,12 @@
       "claude-code": {}
     },
     "remoteUser": "vscode"
+  },
+  "shokkunrf-base": {
+    "image": "ghcr.io/shokkunrf/devcontainer-images/base:latest",
+    "features": {
+      "claude-code": {}
+    },
+    "remoteUser": "developer"
   }
 }
