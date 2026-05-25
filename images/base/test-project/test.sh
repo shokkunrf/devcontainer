@@ -18,6 +18,8 @@ check "prettier" prettier --version
 check "claude" claude --version
 check "gemini" gemini --version
 check "wd" wd --version
+check "gh" gh --version
+check "tmux" tmux -V
 
 # Config checks
 check "prettierrc" test -f /workspaces/.prettierrc
