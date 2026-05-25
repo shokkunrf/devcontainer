@@ -15,6 +15,8 @@ concurrency:
 
 jobs:
   metadata:
+    # Skip cleanly when the release tag is not an image release (e.g., features/*).
+    if: startsWith(github.event.release.tag_name || inputs.tag, 'images/')
     runs-on: ubuntu-latest
     outputs:
       image_name: ${{ steps.meta.outputs.image_name }}

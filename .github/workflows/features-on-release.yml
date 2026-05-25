@@ -1,9 +1,8 @@
 name: "CD: Publish DevContainer Feature"
 
 on:
-  push:
-    tags:
-      - "features/**"
+  release:
+    types: [released]
   workflow_dispatch:
     inputs:
       tag:
@@ -13,18 +12,22 @@ on:
 
 jobs:
   publish:
+    # Skip cleanly when the release tag is not a feature release (e.g., images/*).
+    if: startsWith(github.event.release.tag_name || inputs.tag, 'features/')
     runs-on: ubuntu-latest
     permissions:
       packages: write
       contents: read
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
 
       - name: Extract feature name from tag
         id: meta
         run: |
           # features/devcontainer-cli/v1.0.0 → devcontainer-cli
-          TAG="${{ inputs.tag || github.ref_name }}"
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
           NAME=$(echo "$TAG" | cut -d'/' -f2)
           echo "name=$NAME" >> "$GITHUB_OUTPUT"
 
