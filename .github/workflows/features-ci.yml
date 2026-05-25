@@ -13,27 +13,9 @@ on:
 
 jobs:
   detect:
-    runs-on: ubuntu-latest
-    outputs:
-      features: ${{ steps.set-matrix.outputs.features }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: Detect changed features
-        id: set-matrix
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            features=$(ls -d features/src/*/ | xargs -n1 basename | jq -R -s -c 'split("\n")[:-1]')
-          elif [ "${{ github.event_name }}" = "pull_request" ]; then
-            base="${{ github.event.pull_request.base.sha }}"
-            features=$(git diff --name-only "$base" HEAD -- features/src/ features/test/ | cut -d/ -f3 | sort -u | jq -R -s -c 'split("\n")[:-1]')
-          else
-            features=$(git diff --name-only "${{ github.event.before }}" HEAD -- features/src/ features/test/ | cut -d/ -f3 | sort -u | jq -R -s -c 'split("\n")[:-1]')
-          fi
-          echo "features=$features" >> $GITHUB_OUTPUT
+    uses: ./.github/workflows/_detect-changed.yml
+    with:
+      paths: "features/src features/test"
 
   test:
     needs: detect
@@ -41,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        feature: ${{ fromJson(needs.detect.outputs.features) }}
+        feature: ${{ fromJson(needs.detect.outputs.names) }}
         arch: [amd64, arm64]
         include:
           - arch: amd64

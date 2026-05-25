@@ -13,27 +13,9 @@ on:
 
 jobs:
   detect:
-    runs-on: ubuntu-latest
-    outputs:
-      images: ${{ steps.set-matrix.outputs.images }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: Detect changed images
-        id: set-matrix
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            images=$(ls -d images/*/ | xargs -n1 basename | jq -R -s -c 'split("\n")[:-1]')
-          elif [ "${{ github.event_name }}" = "pull_request" ]; then
-            base="${{ github.event.pull_request.base.sha }}"
-            images=$(git diff --name-only "$base" HEAD -- images/ | cut -d/ -f2 | sort -u | jq -R -s -c 'split("\n")[:-1]')
-          else
-            images=$(git diff --name-only "${{ github.event.before }}" HEAD -- images/ | cut -d/ -f2 | sort -u | jq -R -s -c 'split("\n")[:-1]')
-          fi
-          echo "images=$images" >> $GITHUB_OUTPUT
+    uses: ./.github/workflows/_detect-changed.yml
+    with:
+      paths: "images"
 
   test:
     needs: detect
@@ -41,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image: ${{ fromJson(needs.detect.outputs.images) }}
+        image: ${{ fromJson(needs.detect.outputs.names) }}
         arch: [amd64, arm64]
         include:
           - arch: amd64

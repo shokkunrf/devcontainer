@@ -1,0 +1,48 @@
+name: "Detect changed subjects"
+
+on:
+  workflow_call:
+    inputs:
+      paths:
+        description: "Space-separated root paths whose immediate child directories are the subjects (e.g., 'features/src features/test' or 'images')"
+        required: true
+        type: string
+    outputs:
+      names:
+        description: "JSON array of changed subject names"
+        value: ${{ jobs.detect.outputs.names }}
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      names: ${{ steps.set-matrix.outputs.names }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed subjects
+        id: set-matrix
+        env:
+          PATHS: ${{ inputs.paths }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # List all subjects under the first path
+            first_path=$(echo "$PATHS" | cut -d' ' -f1)
+            names=$(ls -d "$first_path"/*/ 2>/dev/null | xargs -n1 basename | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          else
+            if [ "${{ github.event_name }}" = "pull_request" ]; then
+              base="${{ github.event.pull_request.base.sha }}"
+            else
+              base="${{ github.event.before }}"
+            fi
+            # For each path, get changed files, strip the path prefix, take the first component
+            names=$(
+              for p in $PATHS; do
+                git diff --name-only "$base" HEAD -- "$p" | sed "s|^${p}/||" | cut -d/ -f1
+              done | sort -u | jq -R -s -c 'split("\n")[:-1]'
+            )
+          fi
+          echo "names=$names" >> "$GITHUB_OUTPUT"
