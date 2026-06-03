@@ -43,6 +43,4 @@ export CLOUDSDK_PYTHON
 
 "${INSTALL_DIR}/google-cloud-sdk/install.sh" --quiet --path-update false --command-completion false
 
-ln -s "${INSTALL_DIR}/google-cloud-sdk/bin/gcloud" /usr/local/bin/gcloud
-
 echo "Google Cloud CLI installed successfully!"
