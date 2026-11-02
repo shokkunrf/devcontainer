@@ -53,7 +53,7 @@ jobs:
       - name: Build and test
         if: matrix.platform == 'linux/amd64'
         run: |
-          devcontainer up --workspace-folder "images/${{ inputs.image_name }}"
+          devcontainer up --workspace-folder "images/${{ inputs.image_name }}" --frozen-lockfile
           devcontainer exec --workspace-folder "images/${{ inputs.image_name }}" \
             /bin/sh -c 'if [ -f test-project/test.sh ]; then cd test-project && chmod +x test.sh && ./test.sh; else echo "No test-project/test.sh found, skipping."; fi'
 
@@ -63,6 +63,7 @@ jobs:
             --workspace-folder "images/${{ inputs.image_name }}" \
             --image-name "${{ inputs.image_ref }}:${{ inputs.sha_tag }}-${{ matrix.suffix }}" \
             --platform "${{ matrix.platform }}" \
+            --frozen-lockfile \
             --push
 
   manifest:

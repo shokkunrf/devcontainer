@@ -37,7 +37,7 @@ jobs:
         run: npm install -g @devcontainers/cli
 
       - name: Build image
-        run: devcontainer up --workspace-folder "images/${{ matrix.image }}"
+        run: devcontainer up --workspace-folder "images/${{ matrix.image }}" --frozen-lockfile
 
       - name: Run tests
         run: |
