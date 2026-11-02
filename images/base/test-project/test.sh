@@ -11,7 +11,7 @@ check "git" git --version
 check "node" node --version
 
 node_version=$(node --version)
-check_version_ge "node-requirement" "${node_version}" "v24.0.0"
+check_version_ge "node-requirement" "${node_version}" "v26.0.0"
 
 check "npm" npm --version
 check "prettier" prettier --version
