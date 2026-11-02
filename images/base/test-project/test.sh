@@ -15,8 +15,6 @@ check_version_ge "node-requirement" "${node_version}" "v24.0.0"
 
 check "npm" npm --version
 check "prettier" prettier --version
-check "claude" claude --version
-check "gemini" gemini --version
 check "wd" wd --version
 check "gh" gh --version
 check "tmux" tmux -V
