@@ -1,0 +1,21 @@
+version: 2
+updates:
+  # Bumps each image's devcontainer-lock.json; cut an image release after merging
+  - package-ecosystem: "devcontainers"
+    directories:
+      - "/images/*"
+    schedule:
+      interval: "weekly"
+    groups:
+      devcontainer-features:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
