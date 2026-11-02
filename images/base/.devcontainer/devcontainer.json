@@ -15,11 +15,10 @@
     },
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers/features/node:2": {
-      "version": "24"
+      "version": "26"
     },
-    "ghcr.io/shokkunrf/devcontainer-features/claude-code:1": {},
     "ghcr.io/shokkunrf/devcontainer-features/node-packages:1": {
-      "packages": "prettier,@google/gemini-cli"
+      "packages": "prettier"
     },
     "ghcr.io/shokkunrf/devcontainer-features/wd:1": {}
   },
