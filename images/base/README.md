@@ -23,7 +23,7 @@ Base devcontainer image with common tools.
 
 ## Feature Lockfile
 
-Feature versions are pinned by digest in [`.devcontainer/devcontainer-lock.json`](.devcontainer/devcontainer-lock.json). Refresh it after changing features (or to pick up newer feature releases):
+Feature versions are pinned by digest in [`.devcontainer/devcontainer-lock.json`](.devcontainer/devcontainer-lock.json). Refresh it after changing features:
 
 ```bash
 devcontainer upgrade --workspace-folder images/base
