@@ -19,7 +19,7 @@ jobs:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.1.0
         with:
           ref: ${{ github.event.release.tag_name || inputs.tag }}
 
@@ -44,7 +44,7 @@ jobs:
           cp -r "features/src/${{ steps.meta.outputs.name }}" /tmp/publish-features/
 
       - name: Publish feature
-        uses: devcontainers/action@v1
+        uses: devcontainers/action@v1.4.4
         with:
           publish-features: true
           base-path-to-features: /tmp/publish-features
