@@ -31,7 +31,7 @@ jobs:
           - arch: arm64
             runner: ubuntu-24.04-arm
     steps:
-      - uses: actions/checkout@v6.1.0
+      - uses: actions/checkout@v7.0.1
 
       - name: Install devcontainer CLI
         run: npm install -g @devcontainers/cli
