@@ -2,7 +2,7 @@
   "official-debian": {
     "image": "debian:trixie",
     "features": {
-      "ghcr.io/devcontainers/features/node:1": {
+      "ghcr.io/devcontainers/features/node:2": {
         // Drop this pin once Node.js LTS no longer needs libatomic1 (nodejs/node#63270)
         "version": "24"
       },
@@ -32,7 +32,7 @@
   "devcontainer-base-debian": {
     "image": "mcr.microsoft.com/devcontainers/base:debian",
     "features": {
-      "ghcr.io/devcontainers/features/node:1": {},
+      "ghcr.io/devcontainers/features/node:2": {},
       "node-packages": {
         "packages": "@devcontainers/cli,prettier,@google/gemini-cli"
       }
@@ -42,7 +42,7 @@
   "devcontainer-base-ubuntu-root": {
     "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
     "features": {
-      "ghcr.io/devcontainers/features/node:1": {},
+      "ghcr.io/devcontainers/features/node:2": {},
       "node-packages": {
         "packages": "@devcontainers/cli,prettier,@google/gemini-cli"
       }
@@ -51,7 +51,7 @@
   "devcontainer-base-ubuntu-remote-user": {
     "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
     "features": {
-      "ghcr.io/devcontainers/features/node:1": {},
+      "ghcr.io/devcontainers/features/node:2": {},
       "node-packages": {
         "packages": "@devcontainers/cli,prettier,@google/gemini-cli"
       }
