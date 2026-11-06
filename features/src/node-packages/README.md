@@ -17,9 +17,9 @@ Installs npm packages globally.
 
 ## Options
 
-| Option     | Type   | Default | Description                                              |
-| ---------- | ------ | ------- | -------------------------------------------------------- |
-| `packages` | string | `""`    | Comma-separated list of npm packages to install globally |
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `packages` | string | `""` | Comma-separated list of npm packages to install globally |
 
 ## Examples
 
