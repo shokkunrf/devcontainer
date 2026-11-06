@@ -1,8 +1,9 @@
 version: 2
 updates:
-  # Bumps each image's devcontainer-lock.json; cut an image release after merging
+  # Bumps the root and each image's devcontainer-lock.json; cut an image release after merging image updates
   - package-ecosystem: "devcontainers"
     directories:
+      - "/"
       - "/images/*"
     schedule:
       interval: "weekly"
