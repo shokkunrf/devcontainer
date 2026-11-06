@@ -4,17 +4,10 @@ Custom devcontainer features and images.
 
 ## Development
 
-### Publish features
+### Release a feature
 
-```sh
-devcontainer features publish ./features --namespace ghcr.io/shokkunrf/devcontainer-features
-```
+Bump `version` in `features/src/<name>/devcontainer-feature.json`, then create a GitHub Release tagged `features/<name>/vX.Y.Z` with the same version. It publishes the feature to `ghcr.io/shokkunrf/devcontainer-features/<name>`.
 
-### Build and push images
+### Release an image
 
-```sh
-for dir in ./images/*/; do
-    name=$(basename "$dir")
-    devcontainer build --workspace-folder "$dir" --image-name "ghcr.io/shokkunrf/devcontainer-images/$name:latest" --push
-done
-```
+Create a GitHub Release tagged `images/<name>/vX.Y.Z`. It builds the image for amd64 and arm64 and pushes it to `ghcr.io/shokkunrf/devcontainer-images/<name>` with the `X.Y.Z`, `X.Y`, `X`, and `latest` tags. A prerelease pushes only the `sha-<commit>` tag.

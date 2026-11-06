@@ -14,8 +14,8 @@ Installs [wd](https://github.com/shokkunrf/wd) via the official installer, a CLI
 
 ## Options
 
-| Option    | Type   | Default    | Description                                                                          |
-| --------- | ------ | ---------- | ------------------------------------------------------------------------------------ |
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
 | `version` | string | `"latest"` | Version of wd to install (e.g., `v1.1.1`). Use `latest` for the most recent release. |
 
 ## Requirements
