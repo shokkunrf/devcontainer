@@ -20,6 +20,7 @@ Base devcontainer image with common tools.
 | Node.js 26 + npm | [devcontainers/features/node](https://github.com/devcontainers/features/tree/main/src/node) |
 | prettier | [prettier](https://www.npmjs.com/package/prettier) |
 | tmux | Debian apt |
+| wd | [wd](https://github.com/shokkunrf/wd) |
 
 ## Feature Lockfile
 
