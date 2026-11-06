@@ -2,7 +2,10 @@
   "official-debian": {
     "image": "debian:trixie",
     "features": {
-      "ghcr.io/devcontainers/features/node:1": {},
+      "ghcr.io/devcontainers/features/node:1": {
+        // Drop this pin once Node.js LTS no longer needs libatomic1 (nodejs/node#63270)
+        "version": "24"
+      },
       "node-packages": {
         "packages": "@devcontainers/cli,prettier,@google/gemini-cli"
       }
