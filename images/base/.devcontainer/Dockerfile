@@ -5,4 +5,4 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Default Prettier configuration (fallback for projects without .prettierrc)
-COPY .prettierrc /workspaces/.prettierrc
+COPY prettierrc.json /workspaces/.prettierrc
