@@ -21,6 +21,7 @@ check "tmux" tmux -V
 
 # Config checks
 check "prettierrc" test -f /workspaces/.prettierrc
+check "prettier-plugin-minimal-diff" sh -c 'printf "| a | bb |\n|-|-|\n" | prettier --stdin-filepath /workspaces/table.md | grep -qx "| a | bb |"'
 
 # Report result
 reportResults

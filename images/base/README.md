@@ -19,8 +19,13 @@ Base devcontainer image with common tools.
 | GitHub CLI (`gh`) | [devcontainers/features/github-cli](https://github.com/devcontainers/features/tree/main/src/github-cli) |
 | Node.js 26 + npm | [devcontainers/features/node](https://github.com/devcontainers/features/tree/main/src/node) |
 | prettier | [prettier](https://www.npmjs.com/package/prettier) |
+| prettier-plugin-minimal-diff | [shokkunrf/prettier-plugins](https://github.com/shokkunrf/prettier-plugins/tree/develop/plugins/minimal-diff) |
 | tmux | Debian apt |
 | wd | [wd](https://github.com/shokkunrf/wd) |
+
+## Default Prettier Configuration
+
+Projects without their own Prettier configuration use [`/workspaces/.prettierrc`](.devcontainer/prettierrc.json). It loads minimal-diff from `/usr/local/share/prettier-plugins/` and prints Markdown tables at minimum width, so editing a cell changes only its row.
 
 ## Feature Lockfile
 
