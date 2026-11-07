@@ -1,0 +1,9 @@
+{
+  "endOfLine": "lf",
+  "useTabs": false,
+  "tabWidth": 2,
+  "plugins": [
+    "/usr/local/share/prettier-plugins/prettier-plugin-minimal-diff.mjs"
+  ],
+  "markdownTableStyle": "compact"
+}
